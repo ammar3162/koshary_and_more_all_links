@@ -1,387 +1,771 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover, user-scalable=0" />
-  <title>كشري و اكثر</title>
-  <meta name="description" content=" كشري واكثر — روابط سريعة: المنيو، الطلبات عبر واتساب، الموقع، حساباتنا." />
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+  <title>كشري و اكثر - أشهى الأطباق المصرية في صبيا وصامطة</title>
+  <meta name="description" content="مطعم كشري و اكثر يقدم أشهى الأطباق المصرية الأصيلة في فرعي صبيا وصامطة. اطلب الآن عبر جاهز أو هنقرستيشن أو واتساب.">
+  <meta name="keywords" content="كشري, مطعم مصري, صبيا, صامطة, طعام مصري, وجبات سريعة">
+  <meta name="author" content="كشري و اكثر">
+  
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:title" content="كشري و اكثر - أشهى الأطباق المصرية">
+  <meta property="og:description" content="مطعم كشري و اكثر يقدم أشهى الأطباق المصرية الأصيلة في فرعي صبيا وصامطة">
+  <meta property="og:image" content="logo.jpg">
+  <meta property="og:url" content="https://kosharyandmore.example.com">
+  <meta property="og:type" content="website">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/jpeg" href="logo.jpg">
+  
+  <!-- Preconnect to external resources -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;800&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  
+  <style>
+    :root {
+      /* Color Palette */
+      --primary-color: #b70808;
+      --secondary-color: #391e1e;
+      --accent-color: #cba258;
+      --text-color: #151515;
+      --light-text: #6b4f3f;
+      --bg-color: #f8f6f2;
+      --card-bg: rgba(255, 255, 255, 0.85);
+      --border-color: rgba(203, 162, 88, 0.2);
+      
+      /* Shadows */
+      --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.08);
+      --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.12);
+      --inner-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.05);
+      
+      /* Border Radius */
+      --radius-sm: 12px;
+      --radius-md: 20px;
+      --radius-lg: 26px;
+      --radius-full: 50%;
+      
+      /* Transitions */
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
 
- <style>
-  :root {
-    /* Identity (calm, wood+beige+gold) */
-    --bg: #f2f0eb;
-    --bg2: #ffffff;
-    --green: #391e1e;
-    --green2: #b70808;
-    --wood: #6b4f3f;
-    --gold: #cba258;
-    --ink: #151515;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
 
-    --card: rgba(255, 255, 255, .60);
-    --stroke: rgba(30, 57, 50, .08);
+    html {
+      scroll-behavior: smooth;
+    }
 
-    --shadow: 8px 8px 24px rgba(0, 0, 0, .08);
-    --inner: inset 4px 4px 8px rgba(0, 0, 0, .04);
+    body {
+      font-family: 'Cairo', system-ui, -apple-system, sans-serif;
+      color: var(--text-color);
+      background: linear-gradient(135deg, var(--bg-color) 0%, #f0ede8 100%);
+      min-height: 100vh;
+      line-height: 1.6;
+      overflow-x: hidden;
+      position: relative;
+    }
 
-    --r: 20px;
-    --r2: 26px;
-  }
+    /* Loading Screen */
+    .loading-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: var(--bg-color);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+    }
 
-  * {
-    box-sizing: border-box;
-    -webkit-tap-highlight-color: transparent;
-  }
+    .loading-screen.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
 
-  html, body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-  }
+    .loader {
+      width: 60px;
+      height: 60px;
+      border-radius: var(--radius-full);
+      border: 4px solid rgba(183, 8, 8, 0.2);
+      border-top-color: var(--primary-color);
+      animation: spin 1s linear infinite;
+    }
 
-  body {
-    font-family: 'Cairo', system-ui, -apple-system, sans-serif;
-    color: var(--ink);
-    background: linear-gradient(180deg, var(--bg), var(--bg2));
-    display: flex;
-    justify-content: center;
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
 
-  /* تحسين الطبقة الحبيبية */
-  .grain {
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    opacity: .05;
-    mix-blend-mode: multiply;
-    background-image: url("كشري الاصلي.jpeg");
-    z-index: 1;
-  }
+    /* Background Texture */
+    .bg-texture {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23cba258' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+      opacity: 0.5;
+      z-index: -1;
+    }
 
-  .wrap {
-    width: 100%;
-    max-width: 450px; /* العرض الأمثل للجوال */
-    padding: 12px 12px 30px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    position: relative;
-    z-index: 2;
-  }
+    .container {
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 20px 15px 30px;
+      position: relative;
+      z-index: 1;
+    }
 
-  /* HERO SECTION */
-  .hero {
-    position: relative;
-    border-radius: var(--r2);
-    overflow: hidden;
-    box-shadow: var(--shadow);
-    aspect-ratio: 16 / 12; /* توازن أفضل بين العرض والارتفاع */
-    background: #eee;
-    border: 1px solid rgba(203, 162, 88, .15);
-  }
+    /* Header Section */
+    header {
+      text-align: center;
+      margin-bottom: 25px;
+      animation: fadeInDown 0.8s ease;
+    }
 
-  .hero img.hero-photo {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    filter: contrast(1.02) saturate(1.02);
-  }
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
 
-  .hero::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(180deg, rgba(0,0,0,.4) 0%, transparent 40%, rgba(0,0,0,.7) 100%);
-    z-index: 2;
-  }
+    /* Hero Section */
+    .hero {
+      position: relative;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+      margin-bottom: 25px;
+      animation: fadeIn 1s ease 0.2s both;
+      height: 280px;
+    }
 
-  .logo-badge {
-    position: absolute;
-    left: 10px;
-    right: 10px;
-    bottom: 10px;
-    z-index: 3;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 8px;
-    border-radius: 20px;
-    background: rgba(255, 255, 255, .15);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, .25);
-  }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
 
-  .logo-mark {
-    width: 54px;
-    height: 54px;
-    border-radius: 14px;
-    background: #fff;
-    box-shadow: var(--inner);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-  }
+    .hero-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
 
-  .logo-mark img {
-    width: 85%;
-    height: 85%;
-    object-fit: contain;
-  }
+    .hero:hover .hero-image {
+      transform: scale(1.05);
+    }
 
-  .hero-title {
-    flex: 1;
-    min-width: 0;
-    color: #fff;
-  }
+    .hero-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.5) 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 20px;
+    }
 
-  .hero-title h1 {
-    margin: 0;
-    font-size: 16px;
-    font-weight: 800;
-  }
+    .hero-content {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
 
-  .hero-title p {
-    margin: 2px 0 0;
-    font-family: 'Amiri', serif;
-    font-size: 12px;
-    opacity: .9;
-  }
+    .hero-logo {
+      width: 70px;
+      height: 70px;
+      border-radius: var(--radius-md);
+      background-color: white;
+      box-shadow: var(--shadow-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
 
-  .hero-chips {
-    display: flex;
-    gap: 6px;
-    flex-wrap: wrap;
-    margin-top: 6px;
-  }
+    .hero-logo img {
+      width: 85%;
+      height: 85%;
+      object-fit: contain;
+    }
 
-  .chip {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    padding: 3px 8px;
-    border-radius: 8px;
-    background: rgba(255, 255, 255, .2);
-    font-size: 10px;
-    color: #fff;
-  }
+    .hero-text {
+      color: white;
+      flex: 1;
+    }
 
-  /* BUTTONS & CARDS */
-  .card {
-    border-radius: var(--r2);
-    background: var(--card);
-    border: 1px solid var(--stroke);
-    box-shadow: var(--shadow);
-    padding: 8px;
-  }
+    .hero-title {
+      font-size: 24px;
+      font-weight: 800;
+      margin-bottom: 5px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
 
-  .actions {
-    display: grid;
-    gap: 10px;
-  }
+    .hero-subtitle {
+      font-family: 'Amiri', serif;
+      font-size: 16px;
+      opacity: 0.9;
+      margin-bottom: 10px;
+    }
 
-  .btn {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 10px 14px;
-    border-radius: var(--r);
-    text-decoration: none;
-    color: var(--ink);
-    background: #fff;
-    border: 1px solid rgba(255, 255, 255, .8);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.04);
-    transition: all 0.2s ease;
-  }
+    .hero-info {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
 
-  .btn:active {
-    transform: scale(0.97);
-    background: #f9f9f9;
-  }
+    .info-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      background-color: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(5px);
+      font-size: 12px;
+      color: white;
+    }
 
-  .ico {
-    width: 38px;
-    height: 38px;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #fff;
-    background: linear-gradient(135deg, var(--green), var(--green2));
-    font-size: 16px;
-    flex-shrink: 0;
-  }
+    /* Main Content */
+    main {
+      animation: fadeInUp 0.8s ease 0.4s both;
+    }
 
-  .txt .t {
-    font-weight: 800;
-    font-size: 13px;
-    line-height: 1.2;
-  }
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
 
-  .txt .s {
-    display: block;
-    margin-top: 3px;
-    font-size: 10px;
-    color: rgba(21, 21, 21, .6);
-  }
+    .card {
+      background-color: var(--card-bg);
+      backdrop-filter: blur(10px);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      padding: 25px;
+      margin-bottom: 25px;
+      border: 1px solid var(--border-color);
+    }
 
-  /* SOCIAL SECTION */
-  .social {
-    display: flex;
-    justify-content: center;
-    gap: 16px;
-    margin-top: 10px;
-  }
+    .section-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 15px;
+      color: var(--secondary-color);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
 
-  .social a {
-    width: 46px;
-    height: 46px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #fff;
-    color: var(--green);
-    box-shadow: var(--shadow);
-    font-size: 20px;
-    text-decoration: none;
-  }
+    .section-title i {
+      color: var(--primary-color);
+    }
 
-  .foot {
-    text-align: center;
-    font-size: 10px;
-    color: var(--wood);
-    opacity: .7;
-    margin-top: 15px;
-  }
+    .delivery-note {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 15px;
+      padding: 10px 15px;
+      background-color: rgba(203, 162, 88, 0.1);
+      border-radius: var(--radius-sm);
+      font-size: 14px;
+      color: var(--light-text);
+    }
 
-  /* تحسينات للشاشات الصغيرة جداً (مثل iPhone SE) */
-  @media (max-width: 360px) {
-    .hero-title h1 { font-size: 14px; }
-    .txt .t { font-size: 12px; }
-    .logo-mark { width: 48px; height: 48px; }
-    .ico { width: 34px; height: 34px; }
-  }
-</style>
+    .action-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .action-btn {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      padding: 15px;
+      border-radius: var(--radius-md);
+      background-color: white;
+      box-shadow: var(--shadow-sm);
+      text-decoration: none;
+      color: var(--text-color);
+      transition: var(--transition);
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .action-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .action-btn:hover::before {
+      left: 100%;
+    }
+
+    .action-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .action-btn:active {
+      transform: translateY(0);
+    }
+
+    .btn-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      font-size: 20px;
+      flex-shrink: 0;
+      box-shadow: var(--inner-shadow);
+    }
+
+    .btn-content {
+      flex: 1;
+    }
+
+    .btn-title {
+      font-weight: 700;
+      font-size: 15px;
+      margin-bottom: 3px;
+    }
+
+    .btn-subtitle {
+      font-size: 12px;
+      color: var(--light-text);
+    }
+
+    /* Branch Selector */
+    .branch-selector {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .branch-tab {
+      flex: 1;
+      padding: 10px;
+      text-align: center;
+      border-radius: var(--radius-sm);
+      background-color: rgba(203, 162, 88, 0.1);
+      color: var(--light-text);
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      border: 1px solid transparent;
+    }
+
+    .branch-tab.active {
+      background-color: var(--primary-color);
+      color: white;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .branch-tab:hover:not(.active) {
+      background-color: rgba(203, 162, 88, 0.2);
+    }
+
+    .branch-content {
+      display: none;
+    }
+
+    .branch-content.active {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+
+    /* Social Links */
+    .social-section {
+      margin-top: 20px;
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 15px;
+    }
+
+    .social-link {
+      width: 50px;
+      height: 50px;
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: white;
+      color: var(--primary-color);
+      box-shadow: var(--shadow-sm);
+      font-size: 22px;
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    .social-link:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-md);
+      background-color: var(--primary-color);
+      color: white;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 20px 0;
+      color: var(--light-text);
+      font-size: 14px;
+      opacity: 0.8;
+    }
+
+    /* Back to Top Button */
+    .back-to-top {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 50px;
+      height: 50px;
+      border-radius: var(--radius-full);
+      background-color: var(--primary-color);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow-md);
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transition: var(--transition);
+      z-index: 100;
+    }
+
+    .back-to-top.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .back-to-top:hover {
+      background-color: var(--secondary-color);
+      transform: translateY(-5px);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 480px) {
+      .container {
+        padding: 15px 10px 25px;
+      }
+      
+      .hero {
+        height: 240px;
+      }
+      
+      .hero-title {
+        font-size: 20px;
+      }
+      
+      .hero-subtitle {
+        font-size: 14px;
+      }
+      
+      .card {
+        padding: 20px;
+      }
+      
+      .btn-icon {
+        width: 45px;
+        height: 45px;
+        font-size: 18px;
+      }
+      
+      .btn-title {
+        font-size: 14px;
+      }
+      
+      .btn-subtitle {
+        font-size: 11px;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .hero-title {
+        font-size: 18px;
+      }
+      
+      .hero-subtitle {
+        font-size: 13px;
+      }
+      
+      .hero-logo {
+        width: 60px;
+        height: 60px;
+      }
+      
+      .btn-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
+      }
+    }
+  </style>
 </head>
-
 <body>
-  <div class="grain"></div>
-
-  <div class="wrap">
-
-    <!-- HERO with external logo photo -->
-    <section class="hero" aria-label="koshary an">
-      <!-- استخدم صورتك الخارجية هنا -->
-      <img class="hero-photo" src="logo.jpg" alt=";koshary">
-
-      <div class="logo-badge">
-        <!-- استخدم اللوقو الرسمي هنا -->
-        <div class="logo-mark">
-          <img src="logo.jpg" alt="">
-        </div>
-
-        <div class="hero-title">
-          <h1>كشري و اكثر</h1>
-          <p>أشهى الأطباق المصرية</p>
-
-          <div class="hero-chips">
-<span class="chip">
-  <i class="fa-regular fa-clock"></i>
-من 1:00 مساءً إلى 3:00 صباحًا
-</span>
-            <span class="chip"><i class="fa-solid fa-location-dot"></i> صبيا</span>
-            <span class="chip"><i class="fa-solid fa-location-dot"></i> صامطه</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ACTIONS -->
-    <section class="card">
-      <div class="actions">
-
-        <span class="s"><i class="fa-solid fa-motorcycle"></i> اطلب الآن عبر جاهز أو هنقرستيشن</span>
-        <!-- MENU -->
-        <a class="btn" href="https://menu-kushryandmore.vercel.app/" target="_blank" rel="noopener noreferrer">
-          <div class="ico"><i class="fa-solid fa-bowl-food"></i></div>
-          <div class="txt">
-            <div class="t">قائمة (المنيو)</div>
-            <span class="s">كشري • طاجن مكرونه • اطباق جانبية • حلويات </span>
-          </div>
-        </a>
-
-    
-
-        <!-- WHATSAPP (Primary) -->
-        <a class="btn " href="https://wa.me/966502691716" target="_blank" rel="noopener noreferrer">
-          <div class="ico"><i class="fa-brands fa-whatsapp"></i></div>
-          <div class="txt">
-            <div class="t">طلبات السفري وتجهيز للمناسبات (فرع صبيا)</div>
-            <span class="s">واتساب مباشر • رد سريع</span>
-          </div>
-        </a>
-
-
-        <!-- WHATSAPP (Primary) -->
-        <a class="btn " href="https://wa.me/9665052135952" target="_blank" rel="noopener noreferrer">
-          <div class="ico"><i class="fa-brands fa-whatsapp"></i></div>
-          <div class="txt">
-            <div class="t">طلبات السفري وتجهيز للمناسبات (فرع صامطه)</div>
-            <span class="s">واتساب مباشر • رد سريع</span>
-          </div>
-        </a>
-
-
-        
-    
-
-        <!-- LOCATION -->
-        <a class="btn" href="https://maps.app.goo.gl/VxutFHssCt55WFhVA" target="_blank" rel="noopener noreferrer">
-          <div class="ico"><i class="fa-solid fa-location-dot"></i></div>
-          <div class="txt">
-            <div class="t">الموقع على الخريطة (فرع صبيا)</div>
-            <span class="s">افتح الموقع في Google Maps</span>
-          </div>
-        </a>
-
-
-        <!-- LOCATION -->
-        <a class="btn" href="https://maps.app.goo.gl/EPZfZHu6pTKNRso56" target="_blank" rel="noopener noreferrer">
-          <div class="ico"><i class="fa-solid fa-location-dot"></i></div>
-          <div class="txt">
-            <div class="t">الموقع على الخريطة (فرع صامطة)</div>
-            <span class="s">افتح الموقع في Google Maps</span>
-          </div>
-        </a>
-
-
-      </div>
-
-      <div class="social" aria-label="Social Links">
-        <a href="https://www.instagram.com/koshary.ak/?hl=ar" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-          <i class="fa-brands fa-instagram"></i>
-        </a>
-        <a href="https://www.tiktok.com/@kshrywkthr..2022" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
-          <i class="fa-brands fa-tiktok"></i>
-        </a>
-        <a href="https://www.snapchat.com/add/kshrywkthr" target="_blank" rel="noopener noreferrer" aria-label="Snapchat">
-          <i class="fa-brands fa-snapchat"></i>
-        </a>
-      </div>
-
-      <p class="foot">© 2026 كشري و اكثر</p>
-    </section>
-
+  <!-- Loading Screen -->
+  <div class="loading-screen" id="loadingScreen">
+    <div class="loader"></div>
   </div>
+
+  <!-- Background Texture -->
+  <div class="bg-texture"></div>
+
+  <div class="container">
+    <header>
+      <!-- Hero Section -->
+      <section class="hero">
+        <img src="كشري الاصلي.jpeg" alt="كشري و اكثر" class="hero-image">
+        <div class="hero-overlay">
+          <div class="hero-content">
+            <div class="hero-logo">
+              <img src="logo.jpg" alt="شعار كشري و اكثر">
+            </div>
+            <div class="hero-text">
+              <h1 class="hero-title">كشري و اكثر</h1>
+              <p class="hero-subtitle">أشهى الأطباق المصرية الأصيلة</p>
+              <div class="hero-info">
+                <span class="info-chip">
+                  <i class="fa-regular fa-clock"></i>
+                  من 3:00 مساءً إلى 3:00 صباحًا
+                </span>
+                <span class="info-chip">
+                  <i class="fa-solid fa-location-dot"></i>
+                  صبيا
+                </span>
+                <span class="info-chip">
+                  <i class="fa-solid fa-location-dot"></i>
+                  صامطة
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </header>
+
+    <main>
+      <!-- Menu Section -->
+      <section class="card">
+        <h2 class="section-title">
+          <i class="fa-solid fa-bowl-food"></i>
+          قائمة الطعام
+        </h2>
+        <div class="delivery-note">
+          <i class="fa-solid fa-motorcycle"></i>
+          <span>اطب الآن عبر جاهز أو هنقرستييون</span>
+        </div>
+        <div class="action-buttons">
+          <a href="https://menu-kushryandmore.vercel.app/" target="_blank" rel="noopener noreferrer" class="action-btn">
+            <div class="btn-icon">
+              <i class="fa-solid fa-bowl-food"></i>
+            </div>
+            <div class="btn-content">
+              <div class="btn-title">قائمة (المنيو)</div>
+              <div class="btn-subtitle">كشري • طاجن مكرونة • أطباق جانبية • حلويات</div>
+            </div>
+          </a>
+        </div>
+      </section>
+
+      <!-- Order Section -->
+      <section class="card">
+        <h2 class="section-title">
+          <i class="fa-solid fa-phone-volume"></i>
+          طلبات السفري والمناسبات
+        </h2>
+        
+        <div class="branch-selector">
+          <div class="branch-tab active" data-branch="sabia">فرع صبيا</div>
+          <div class="branch-tab" data-branch="samta">فرع صامطة</div>
+        </div>
+        
+        <div class="branch-content active" id="sabia">
+          <div class="action-buttons">
+            <a href="https://wa.me/966502691716" target="_blank" rel="noopener noreferrer" class="action-btn">
+              <div class="btn-icon">
+                <i class="fa-brands fa-whatsapp"></i>
+              </div>
+              <div class="btn-content">
+                <div class="btn-title">طلبات السفري وتجهيز للمناسبات</div>
+                <div class="btn-subtitle">فرع صبيا - واتساب مباشر • رد سريع</div>
+              </div>
+            </a>
+            <a href="https://maps.app.goo.gl/VxutFHssCt55WFhVA" target="_blank" rel="noopener noreferrer" class="action-btn">
+              <div class="btn-icon">
+                <i class="fa-solid fa-location-dot"></i>
+              </div>
+              <div class="btn-content">
+                <div class="btn-title">الموقع على الخريطة</div>
+                <div class="btn-subtitle">افتح الموقع في Google Maps وقيم تجربتك معنا</div>
+              </div>
+            </a>
+          </div>
+        </div>
+        
+        <div class="branch-content" id="samta">
+          <div class="action-buttons">
+            <a href="https://wa.me/9665052135952" target="_blank" rel="noopener noreferrer" class="action-btn">
+              <div class="btn-icon">
+                <i class="fa-brands fa-whatsapp"></i>
+              </div>
+              <div class="btn-content">
+                <div class="btn-title">طلبات السفري وتجهيز للمناسبات</div>
+                <div class="btn-subtitle">فرع صامطة - واتساب مباشر • رد سريع</div>
+              </div>
+            </a>
+            <a href="https://maps.app.goo.gl/EPZfZHu6pTKNRso56" target="_blank" rel="noopener noreferrer" class="action-btn">
+              <div class="btn-icon">
+                <i class="fa-solid fa-location-dot"></i>
+              </div>
+              <div class="btn-content">
+                <div class="btn-title">الموقع على الخريطة</div>
+                <div class="btn-subtitle">افتح الموقع في Google Maps وقيم تجربتك معنا</div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Social Section -->
+      <section class="card social-section">
+        <h2 class="section-title">
+          <i class="fa-solid fa-share-nodes"></i>
+          تابعنا على وسائل التواصل الاجتماعي
+        </h2>
+        <div class="social-links">
+          <a href="https://www.instagram.com/koshary.ak/?hl=ar" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Instagram">
+            <i class="fa-brands fa-instagram"></i>
+          </a>
+          <a href="https://www.tiktok.com/@kshrywkthr..2022" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="TikTok">
+            <i class="fa-brands fa-tiktok"></i>
+          </a>
+          <a href="https://www.snapchat.com/add/kshrywkthr" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Snapchat">
+            <i class="fa-brands fa-snapchat"></i>
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p>&copy; 2024 كشري و اكثر - جميع الحقوق محفوظة</p>
+    </footer>
+  </div>
+
+  <!-- Back to Top Button -->
+  <div class="back-to-top" id="backToTop">
+    <i class="fa-solid fa-arrow-up"></i>
+  </div>
+
+  <script>
+    // Loading Screen
+    window.addEventListener('load', function() {
+      setTimeout(function() {
+        document.getElementById('loadingScreen').classList.add('hidden');
+      }, 500);
+    });
+
+    // Branch Selector
+    const branchTabs = document.querySelectorAll('.branch-tab');
+    const branchContents = document.querySelectorAll('.branch-content');
+
+    branchTabs.forEach(tab => {
+      tab.addEventListener('click', function() {
+        const branchId = this.getAttribute('data-branch');
+        
+        // Remove active class from all tabs and contents
+        branchTabs.forEach(t => t.classList.remove('active'));
+        branchContents.forEach(c => c.classList.remove('active'));
+        
+        // Add active class to clicked tab and corresponding content
+        this.classList.add('active');
+        document.getElementById(branchId).classList.add('active');
+      });
+    });
+
+    // Back to Top Button
+    const backToTopButton = document.getElementById('backToTop');
+
+    window.addEventListener('scroll', function() {
+      if (window.pageYOffset > 300) {
+        backToTopButton.classList.add('visible');
+      } else {
+        backToTopButton.classList.remove('visible');
+      }
+    });
+
+    backToTopButton.addEventListener('click', function() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+
+    // Add subtle animation to elements when they come into view
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver(function(entries) {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = 1;
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, observerOptions);
+
+    // Observe all cards
+    document.querySelectorAll('.card').forEach(card => {
+      card.style.opacity = 0;
+      card.style.transform = 'translateY(20px)';
+      card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+      observer.observe(card);
+    });
+  </script>
 </body>
 </html>
-
